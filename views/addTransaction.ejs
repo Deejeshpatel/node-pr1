@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= eTransaction ? 'Edit' : 'Add' %> Transaction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fb;
+            color: #333;
+            padding-bottom: 60px;
+        }
+
+        .header {
+            background-color: #08960b;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 4px solid #08960b;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 700px;
+            margin-top: 40px;
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #007bff;
+        }
+
+        .btn-custom {
+            background-color: #08960b;
+            color: #fff;
+            border-radius: 20px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            border-radius: 20px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #6c757d;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 15px 20px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #007bff;
+        }
+
+        textarea.form-control {
+            resize: none;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .form-actions {
+            margin-top: 30px;
+        }
+
+        a.btn-secondary {
+            display: block;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Expense Tracker</h1>
+    </div>
+    <div class="container">
+        <h2><%= eTransaction ? 'Edit' : 'Add' %> Transaction</h2>
+        <form action="<%= eTransaction ? '/update/' + eTransaction._id : '/addTracker' %>" method="POST">
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select name="type" id="type" class="form-control p-0" required>
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Income" <%= eTransaction && eTransaction.type === 'Income' ? 'selected' : '' %>>Income</option>
+                    <option value="Expense" <%= eTransaction && eTransaction.type === 'Expense' ? 'selected' : '' %>>Expense</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" name="category" id="category" class="form-control" 
+                       value="<%= eTransaction ? eTransaction.category : '' %>" placeholder="e.g., Food, Transport" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="number" name="amount" id="amount" class="form-control" 
+                       value="<%= eTransaction ? eTransaction.amount : '' %>" placeholder="e.g., 1000" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" class="form-control" rows="4"
+                          placeholder="Optional details about the transaction..."><%= eTransaction ? eTransaction.description : '' %></textarea>
+            </div>
+            <div class="actions form-actions">
+                <button type="submit" class="btn btn-custom"><%= eTransaction ? 'Update' : 'Add' %> Transaction</button>
+                <a href="/" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
